@@ -9,11 +9,11 @@ export default defineConfig({
     tailwindcss(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.svg', 'pwa-192.png', 'pwa-512.png'],
+      includeAssets: ['favicon.svg', 'app-logo.jpg', 'pwa-192.png', 'pwa-512.png'],
       manifest: {
         name: 'Pharma Deal & Profit Calculator',
         short_name: 'PharmaCalc',
-        description: 'Pharma Deal & Profit Calculator for Medical Distributors & Stockists',
+        description: 'PTR PTS Pharma Deal & Profit Calculator for Medical Distributors & Stockists',
         theme_color: '#0f766e',
         background_color: '#0d9488',
         display: 'standalone',

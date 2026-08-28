@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Pill, BarChart3, Calculator, FileSpreadsheet, Download, Smartphone } from 'lucide-react';
+import { BarChart3, Calculator, FileSpreadsheet, Download } from 'lucide-react';
 
 export default function Navbar({ activeTab, setActiveTab }) {
   const [deferredPrompt, setDeferredPrompt] = useState(null);
@@ -25,8 +25,7 @@ export default function Navbar({ activeTab, setActiveTab }) {
       setDeferredPrompt(null);
       window.deferredPrompt = null;
     } else {
-      // Direct native browser prompt trigger
-      alert("📱 Mobile App Download:\n\nChrome / Mobile Browser lo website open avagane 1 second lo screen bottom lo 'Add to Home screen' or 'Install App' banner kanipisthundhi. Click 'Install'!");
+      alert("📱 Mobile App Download:\n\nChrome / Mobile Browser lo website open avagane bottom lo 'Add to Home screen' or 'Install App' banner kanipisthundhi. Click 'Install'!");
     }
   };
 
@@ -35,16 +34,25 @@ export default function Navbar({ activeTab, setActiveTab }) {
       <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
         <div className="flex flex-col sm:flex-row items-center justify-between py-2 sm:py-0 sm:h-16 gap-2 sm:gap-0">
           
-          {/* Logo & Title */}
-          <div className="flex items-center space-x-2 sm:space-x-3">
-            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-teal-600 flex items-center justify-center text-emerald-300 shadow-inner">
-              <Pill className="w-5 h-5 sm:w-6 sm:h-6 animate-pulse" />
+          {/* Custom Bubble App Logo matching uploaded image without white border */}
+          <div className="flex items-center space-x-2.5 sm:space-x-3">
+            <div className="relative group">
+              <img 
+                src="/app-logo.jpg" 
+                alt="PTR PTS App Logo" 
+                className="w-9 h-9 sm:w-11 sm:h-11 rounded-2xl object-cover shadow-lg border border-blue-400/40 transform group-hover:scale-105 transition-all" 
+              />
+              <span className="absolute -top-1 -right-1 flex h-3 w-3">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+              </span>
             </div>
+
             <div>
               <div className="flex items-center space-x-1.5 sm:space-x-2">
-                <span className="font-bold text-base sm:text-xl tracking-tight">Pharma Deal & Profit</span>
-                <span className="bg-amber-500/20 text-amber-300 text-[10px] sm:text-xs px-2 py-0.5 rounded-full border border-amber-500/30 font-medium">
-                  Mobile Pro
+                <span className="font-extrabold text-base sm:text-xl tracking-tight">Pharma Deal & Profit</span>
+                <span className="bg-amber-500/20 text-amber-300 text-[10px] sm:text-xs px-2 py-0.5 rounded-full border border-amber-500/30 font-semibold">
+                  PRO
                 </span>
               </div>
               <p className="text-[10px] sm:text-xs text-teal-200 hidden sm:block">
@@ -93,7 +101,7 @@ export default function Navbar({ activeTab, setActiveTab }) {
               </button>
             </nav>
 
-            {/* SEAMLESS NATIVE INSTALL BUTTON */}
+            {/* DOWNLOAD BUTTON */}
             <button
               onClick={handleInstallClick}
               className="bg-amber-400 hover:bg-amber-500 text-slate-950 font-black px-3 py-2 rounded-xl text-xs flex items-center space-x-1.5 shadow transition-all border border-amber-300 flex-shrink-0 animate-bounce"
