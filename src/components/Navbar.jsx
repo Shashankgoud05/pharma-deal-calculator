@@ -1,23 +1,32 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Pill, BarChart3, Calculator, FileSpreadsheet, Download, Smartphone } from 'lucide-react';
 
 export default function Navbar({ activeTab, setActiveTab }) {
-  const triggerInstallPrompt = () => {
-    // Show PWA install instructions or trigger prompt
-    if (window.deferredPrompt) {
-      window.deferredPrompt.prompt();
-      window.deferredPrompt.userChoice.then((choiceResult) => {
-        if (choiceResult.outcome === 'accepted') {
-          console.log('User accepted the install prompt');
-        }
-        window.deferredPrompt = null;
-      });
+  const [deferredPrompt, setDeferredPrompt] = useState(null);
+
+  useEffect(() => {
+    const handler = (e) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+      window.deferredPrompt = e;
+    };
+    window.addEventListener('beforeinstallprompt', handler);
+    return () => window.removeEventListener('beforeinstallprompt', handler);
+  }, []);
+
+  const handleInstallClick = async () => {
+    const promptEvent = deferredPrompt || window.deferredPrompt;
+    if (promptEvent) {
+      promptEvent.prompt();
+      const choiceResult = await promptEvent.userChoice;
+      if (choiceResult.outcome === 'accepted') {
+        console.log('User accepted PWA installation');
+      }
+      setDeferredPrompt(null);
+      window.deferredPrompt = null;
     } else {
-      alert(
-        "📱 To Install Mobile App on Phone / Desktop:\n\n" +
-        "1. Chrome (Android / PC): Tap 3 Dots (⋮) at top right -> Click 'Install App' or 'Add to Home Screen'.\n" +
-        "2. Safari (iPhone): Tap Share Icon (square with up arrow) -> Tap 'Add to Home Screen'."
-      );
+      // Direct native browser prompt trigger
+      alert("📱 Mobile App Download:\n\nChrome / Mobile Browser lo website open avagane 1 second lo screen bottom lo 'Add to Home screen' or 'Install App' banner kanipisthundhi. Click 'Install'!");
     }
   };
 
@@ -84,15 +93,15 @@ export default function Navbar({ activeTab, setActiveTab }) {
               </button>
             </nav>
 
-            {/* DOWNLOAD / INSTALL APP BUTTON IN NAVBAR */}
+            {/* SEAMLESS NATIVE INSTALL BUTTON */}
             <button
-              onClick={triggerInstallPrompt}
-              className="bg-amber-500 hover:bg-amber-600 text-slate-950 font-black px-3 py-2 rounded-xl text-xs flex items-center space-x-1.5 shadow transition-all border border-amber-400 flex-shrink-0"
-              title="Install App on Phone"
+              onClick={handleInstallClick}
+              className="bg-amber-400 hover:bg-amber-500 text-slate-950 font-black px-3 py-2 rounded-xl text-xs flex items-center space-x-1.5 shadow transition-all border border-amber-300 flex-shrink-0 animate-bounce"
+              title="Download & Install App"
             >
-              <Smartphone className="w-4 h-4" />
+              <Download className="w-4 h-4" />
               <span className="hidden sm:inline">Install App</span>
-              <span className="sm:hidden">App</span>
+              <span className="sm:hidden">Install</span>
             </button>
           </div>
         </div>
